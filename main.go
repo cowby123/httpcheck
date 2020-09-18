@@ -102,6 +102,12 @@ func CheckClientFunc(configdata Servercfg) gin.HandlerFunc {
 				return
 			}
 			defer resp.Body.Close()
+			body, err := ioutil.ReadAll(resp.Body)
+			fmt.Println(string(body))
+			fmt.Println(resp.StatusCode)
+			if resp.StatusCode == 200 {
+				fmt.Println("ok")
+			}
 			c.JSON(200, gin.H{ // 返回一个JSON，状态码是200，gin.H是map[string]interface{}的简写
 				"message": "err",
 			})
