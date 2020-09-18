@@ -33,12 +33,6 @@ func gettime() {
 	}
 
 }
-func getcfg() {
-	for {
-		GetConfig()
-		time.Sleep(10 * time.Second)
-	}
-}
 
 //GetConfig 讀取配置檔
 func GetConfig() {
@@ -73,9 +67,10 @@ func main() {
 	go gettime()
 	GetConfig()
 	for i := 0; i < len(cfg); i++ {
-		StartServer(cfg[i])
+		go StartServer(cfg[i])
 	}
-
+	for {
+	}
 }
 
 //CheckClientFunc 確認config
