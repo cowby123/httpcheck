@@ -36,7 +36,7 @@ func gettime() {
 
 //GetConfig 讀取配置檔
 func GetConfig() {
-	tmp, err := ioutil.ReadFile("./checkinit.conf")
+	tmp, err := ioutil.ReadFile("/bin/checkinit.conf")
 	if err != nil {
 		fmt.Println("GetConfig error")
 	}
