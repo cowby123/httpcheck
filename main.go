@@ -96,18 +96,7 @@ func CheckClientFunc(configdata Servercfg) gin.HandlerFunc {
 		fmt.Println(reqip)
 		timeint, err := strconv.ParseInt(inttime, 10, 64)
 		if err != nil {
-			resp, err := http.Get("http://" + configdata.ForwordServerIP + ":" + configdata.ForwordCtrlAPIPort + "/open?ip=" + ip)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			defer resp.Body.Close()
-			body, err := ioutil.ReadAll(resp.Body)
-			fmt.Println(string(body))
-			fmt.Println(resp.StatusCode)
-			if resp.StatusCode == 200 {
-				fmt.Println("ok")
-			}
+
 			c.JSON(200, gin.H{ // 返回一个JSON，状态码是200，gin.H是map[string]interface{}的简写
 				"message": "err",
 			})
@@ -117,6 +106,18 @@ func CheckClientFunc(configdata Servercfg) gin.HandlerFunc {
 		if reqip == ip {
 			//開始檢驗時間
 			if timetag-timeint < 30 {
+				resp, err := http.Get("http://" + configdata.ForwordServerIP + ":" + configdata.ForwordCtrlAPIPort + "/open?ip=" + ip)
+				if err != nil {
+					fmt.Println(err)
+					return
+				}
+				defer resp.Body.Close()
+				body, err := ioutil.ReadAll(resp.Body)
+				fmt.Println(string(body))
+				fmt.Println(resp.StatusCode)
+				if resp.StatusCode == 200 {
+					fmt.Println("ok")
+				}
 				c.JSON(200, gin.H{ // 返回一个JSON，状态码是200，gin.H是map[string]interface{}的简写
 					"message": "OK",
 				})
